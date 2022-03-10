@@ -1,2 +1,2 @@
-rootProject.name = "create-developer-account"
+rootProject.name = "management-api-automation"
 
