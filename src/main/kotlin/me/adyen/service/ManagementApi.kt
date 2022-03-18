@@ -2,6 +2,7 @@ package me.adyen
 
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
@@ -23,7 +24,9 @@ class ManagementApi(env : Environment = Environment.Test) {
         if (key == null){
             println("No API Key value found for environment variable \$MANAGEMENT_KEY. Exiting...")
             exitProcess(0)
+
         }
+        println(key)
     }
 
     private val client = HttpClient(){ install(JsonFeature) {
@@ -46,6 +49,49 @@ class ManagementApi(env : Environment = Environment.Test) {
         }
         println(response.receive<String>())
     }
+
+    @OptIn(InternalAPI::class)
+    suspend fun addAllowedOrigins(domain : Domain){
+        try {
+            val response: HttpResponse = client.post("$baseUrl/me/allowedOrigins") {
+                contentType(ContentType.Application.Json)
+                body = domain
+                headers {
+                    append("x-api-key", key!!)
+                }
+            }
+            println(response.receive<String>())
+        } catch (error: ClientRequestException){
+            println(error)
+        }
+    }
+
+    @OptIn(InternalAPI::class)
+    suspend fun getapiCredentials(company: String): Credentials{
+        val response: Credentials = client.get("$baseUrl/companies/$company/apiCredentials") {
+                contentType(ContentType.Application.Json)
+                headers {
+                    append("x-api-key", key!!)
+                }
+        }
+        return response
+    }
+
+    @OptIn(InternalAPI::class)
+    suspend fun generateClientKey(company: String, apiCredentialID: String){
+        try {
+            val response: HttpResponse = client.post("$baseUrl/companies/$company/apiCredentials/$apiCredentialID/generateClientKey") {
+                contentType(ContentType.Application.Json)
+                headers {
+                    append("x-api-key", key!!)
+                }
+            }
+            println(response.receive<String>())
+        } catch (error: ClientRequestException){
+            println(error)
+        }
+    }
+
 
 
 

@@ -13,3 +13,18 @@ data class User(
     val roles : List<String>,
     val associatedMerchantAccounts : List<String>){
 }
+
+@Serializable
+data class Domain(
+    val domain: String
+)
+
+@Serializable
+data class Credentials(
+    val data: List<Data>
+)
+@Serializable
+data class Data(
+    val id: String,
+    val username: String
+)
