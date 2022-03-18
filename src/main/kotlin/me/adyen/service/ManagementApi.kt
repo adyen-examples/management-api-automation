@@ -16,6 +16,12 @@ enum class Environment {
     Live
 }
 
+// Enum class so we can specify between generating clientkey or APIkey
+enum class Specification(val value: String) {
+    Clientkey("generateClientKey"),
+    APIkey("generateApiKey")
+}
+
 class ManagementApi(env : Environment = Environment.Test) {
     private val baseUrl = if(env == Environment.Test) "https://management-test.adyen.com/v1" else "https://management.adyen.com/v1"
     private val key: String? = System.getenv("MANAGEMENT_KEY")
@@ -78,9 +84,9 @@ class ManagementApi(env : Environment = Environment.Test) {
     }
 
     @OptIn(InternalAPI::class)
-    suspend fun generateClientKey(company: String, apiCredentialID: String){
+    suspend fun generateClientKey(company: String, apiCredentialID: String, keySpec: Specification){
         try {
-            val response: HttpResponse = client.post("$baseUrl/companies/$company/apiCredentials/$apiCredentialID/generateClientKey") {
+            val response: HttpResponse = client.post("$baseUrl/companies/$company/apiCredentials/$apiCredentialID/"+ keySpec.value) {
                 contentType(ContentType.Application.Json)
                 headers {
                     append("x-api-key", key!!)
