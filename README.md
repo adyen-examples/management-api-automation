@@ -14,9 +14,14 @@ This repository contains a set of snippets using Adyen's [Management API](https:
 
 To use these snippets, You need to [generate an API KEY](https://docs.adyen.com/development-resources/api-credentials) and make it available as environment variable under the name MANAGEMENT_KEY.
 
+The snippets will not all need the same roles. You can see a complete list of available roles [here](https://docs.adyen.com/development-resources/api-credentials/roles).
+Typically, you will need roles of the "Management API" type.
+
+
 ## Available snippets
 
 * [CreateCompanyUser](./src/main/kotlin/me/adyen/CreateCompanyUser.kt) - Creates a User on the test environment with a set of rights. We use that snippet to create accounts for our candidates so they can do the technical interview.
+  * Required role to run the snippet - "Management API—Users read and write" 
 
 ## Contributing
 
