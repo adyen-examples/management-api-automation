@@ -17,8 +17,8 @@ suspend fun createEngineeringTestUser(email: String, firstName: String, lastName
 //    "View payments"
     )
 
-    val companyId = "TestCompany123"
-    val merchantAccount = "TestMerchantAccount"
+    val companyId = "AdyenRecruitment"
+    val merchantAccount = "AdyenRecruitmentCOM"
 
     managementApi.createUser(companyId,
         User(
