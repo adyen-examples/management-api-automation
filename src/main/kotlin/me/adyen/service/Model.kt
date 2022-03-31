@@ -15,11 +15,6 @@ data class User(
 }
 
 @Serializable
-data class Domain(
-    val domain: String
-)
-
-@Serializable
 data class Credentials(
     val data: List<Data>
 )

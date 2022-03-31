@@ -57,22 +57,6 @@ class ManagementApi(env : Environment = Environment.Test) {
     }
 
     @OptIn(InternalAPI::class)
-    suspend fun addAllowedOrigins(domain : Domain){
-        try {
-            val response: HttpResponse = client.post("$baseUrl/me/allowedOrigins") {
-                contentType(ContentType.Application.Json)
-                body = domain
-                headers {
-                    append("x-api-key", key!!)
-                }
-            }
-            println(response.receive<String>())
-        } catch (error: ClientRequestException){
-            println(error)
-        }
-    }
-
-    @OptIn(InternalAPI::class)
     suspend fun getapiCredentials(company: String): Credentials{
         val response: Credentials = client.get("$baseUrl/companies/$company/apiCredentials") {
                 contentType(ContentType.Application.Json)
@@ -94,36 +78,6 @@ class ManagementApi(env : Environment = Environment.Test) {
             }
         } catch (error: ClientRequestException){
             Key()
-        }
-    }
-
-    @OptIn(InternalAPI::class)
-    suspend fun getWebhooks(company: String){
-        try {
-            val response: HttpResponse = client.get("$baseUrl/companies/$company/webhooks") {
-                contentType(ContentType.Application.Json)
-                headers {
-                    append("x-api-key", key!!)
-                }
-            }
-            println(response.receive<String>())
-        } catch (error: ClientRequestException){
-            println(error)
-        }
-    }
-
-    @OptIn(InternalAPI::class)
-    suspend fun generateWebhookHmac(company: String, webhookId: String){
-        try {
-            val response: HttpResponse = client.post("$baseUrl/companies/$company/webhooks/$webhookId/generateHmac") {
-                contentType(ContentType.Application.Json)
-                headers {
-                    append("x-api-key", key!!)
-                }
-            }
-            println(response.receive<String>())
-        } catch (error: ClientRequestException){
-            println(error)
         }
     }
 }

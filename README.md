@@ -17,7 +17,7 @@ To use these snippets, You need to [generate an API KEY](https://docs.adyen.com/
 ## Available snippets
 
 * [CreateCompanyUser](./src/main/kotlin/me/adyen/CreateCompanyUser.kt) - Creates a User on the test environment with a set of rights. We use that snippet to create accounts for our candidates so they can do the technical interview.
-
+* [GenerateKey](./src/main/kotlin/me/adyen/GenerateKey.kt) - Generates new clientkey/APIkeys for specified user on company account. 
 ## Contributing
 
 We commit all our new features directly into our GitHub repository. Feel free to request or suggest new features or code changes yourself as well!
