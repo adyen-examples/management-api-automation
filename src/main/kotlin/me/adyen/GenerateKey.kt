@@ -11,10 +11,14 @@ suspend fun generateKey(company: String, user: String, spec: Specification) {
     // getting the credentials of the company
     val credentials = managementApi.getapiCredentials(company)
     println(credentials)
+
     // Generating new Clientkey for specified credential ID and company
     val credential = credentials.data.find { it.username == user}
+    var keys = Key()
     if (credential != null) {
-        managementApi.generateClientKey(company, credential.id, spec)
+        keys = managementApi.generateClientKey(company, credential.id, spec)
     }
+    //
+    println(keys.clientKey)
 }
 

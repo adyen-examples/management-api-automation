@@ -84,9 +84,23 @@ class ManagementApi(env : Environment = Environment.Test) {
     }
 
     @OptIn(InternalAPI::class)
-    suspend fun generateClientKey(company: String, apiCredentialID: String, keySpec: Specification){
+    suspend fun generateClientKey(company: String, apiCredentialID: String, keySpec: Specification): Key{
+        return try {
+            client.post("$baseUrl/companies/$company/apiCredentials/$apiCredentialID/"+ keySpec.value) {
+                contentType(ContentType.Application.Json)
+                headers {
+                    append("x-api-key", key!!)
+                }
+            }
+        } catch (error: ClientRequestException){
+            Key()
+        }
+    }
+
+    @OptIn(InternalAPI::class)
+    suspend fun getWebhooks(company: String){
         try {
-            val response: HttpResponse = client.post("$baseUrl/companies/$company/apiCredentials/$apiCredentialID/"+ keySpec.value) {
+            val response: HttpResponse = client.get("$baseUrl/companies/$company/webhooks") {
                 contentType(ContentType.Application.Json)
                 headers {
                     append("x-api-key", key!!)
@@ -98,7 +112,18 @@ class ManagementApi(env : Environment = Environment.Test) {
         }
     }
 
-
-
-
+    @OptIn(InternalAPI::class)
+    suspend fun generateWebhookHmac(company: String, webhookId: String){
+        try {
+            val response: HttpResponse = client.post("$baseUrl/companies/$company/webhooks/$webhookId/generateHmac") {
+                contentType(ContentType.Application.Json)
+                headers {
+                    append("x-api-key", key!!)
+                }
+            }
+            println(response.receive<String>())
+        } catch (error: ClientRequestException){
+            println(error)
+        }
+    }
 }

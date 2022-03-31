@@ -23,8 +23,14 @@ data class Domain(
 data class Credentials(
     val data: List<Data>
 )
+
 @Serializable
 data class Data(
     val id: String,
     val username: String
+)
+@Serializable
+data class Key(
+    var clientKey: String?=null,
+    var apiKey: String?=null
 )
