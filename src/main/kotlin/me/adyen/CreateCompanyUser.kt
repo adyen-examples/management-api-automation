@@ -1,6 +1,6 @@
 package me.adyen
 
-suspend fun main(args: Array<String>){
+suspend fun main(){
     createEngineeringTestUser("test@adyen.com", "test", "user")
 }
 
