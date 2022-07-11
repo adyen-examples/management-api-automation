@@ -2,12 +2,13 @@ package me.adyen
 
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.plugins.json.*
-import io.ktor.client.plugins.json.serializer.*
+import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.*
+import kotlinx.serialization.json.Json
 import kotlin.system.exitProcess
 
 enum class Environment {
@@ -28,8 +29,8 @@ class ManagementApi(env: Environment = Environment.Test) {
     }
 
     private val client = HttpClient() {
-        install(JsonFeature) {
-            serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
+        install(ContentNegotiation) {
+            json(Json {
                 prettyPrint = true
                 isLenient = true
                 ignoreUnknownKeys = true
@@ -46,7 +47,7 @@ class ManagementApi(env: Environment = Environment.Test) {
                 append("x-api-key", key!!)
             }
         }
-        println(response.receive<String>())
+        println(response.body<String>())
     }
 
 
