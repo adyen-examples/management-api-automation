@@ -1,0 +1,19 @@
+### Info about me, testing the call
+GET https://management-test.adyen.com/v1/me
+Accept: application/json
+X-API-Key: {{apiKey}}
+
+### Companies in the Account
+GET https://management-test.adyen.com/v1/companies
+Accept: application/json
+X-API-Key: {{apiKey}}
+
+### Users in the company
+GET https://management-test.adyen.com/v1/companies/{{companyId}}/users
+Accept: application/json
+X-API-Key: {{apiKey}}
+
+### API Credentials in the company
+GET https://management-test.adyen.com/v1/companies/{{companyId}}/apiCredentials
+Accept: application/json
+X-API-Key: {{apiKey}}
